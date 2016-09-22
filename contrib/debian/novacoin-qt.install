@@ -1,0 +1,5 @@
+LiviaCoin-qt usr/bin
+share/pixmaps/LiviaCoin32.xpm usr/share/pixmaps
+share/pixmaps/LiviaCoin80.xpm usr/share/pixmaps
+debian/LiviaCoin-qt.desktop usr/share/applications
+debian/LiviaCoin-qt.protocol usr/share/kde4/services/

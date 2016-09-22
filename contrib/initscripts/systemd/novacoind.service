@@ -1,0 +1,11 @@
+[Unit]
+Description=LiviaCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=LiviaCoin
+ExecStart=/opt/LiviaCoin/LiviaCoind
+
+[Install]
+WantedBy=multi-user.target

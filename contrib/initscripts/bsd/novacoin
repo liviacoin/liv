@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: LiviaCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# LiviaCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable LiviaCoin service.
+# LiviaCoin_config (path): Set to /usr/local/etc/LiviaCoin.conf by default.
+# LiviaCoin_user:  The user account LiviaCoin daemon runs as. It uses 'root' user by default.
+# LiviaCoin_group: The group account LiviaCoin daemon runs as. It uses 'wheel' group by default.
+# LiviaCoin_datadir (str): Default to "/var/db/LiviaCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=LiviaCoin
+rcvar=LiviaCoin_enable
+
+: ${LiviaCoin_enable:=NO}
+: ${LiviaCoin_config=/usr/local/etc/LiviaCoin.conf}
+: ${LiviaCoin_datadir=/var/db/LiviaCoin}
+: ${LiviaCoin_user="root"}
+: ${LiviaCoin_group="wheel"}
+
+required_files=${LiviaCoin_config}
+command=/usr/local/bin/LiviaCoind
+LiviaCoin_chdir=${LiviaCoin_datadir}
+pidfile="${LiviaCoin_datadir}/LiviaCoind.pid"
+stop_cmd=LiviaCoin_stop
+command_args="-conf=${LiviaCoin_config} -datadir=${LiviaCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+LiviaCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${LiviaCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${LiviaCoin_user}:${LiviaCoin_group} ${LiviaCoin_datadir}
+}
+
+LiviaCoin_prestart()
+{
+	if [ ! -d "${LiviaCoin_datadir}/." ]; then
+		LiviaCoin_create_datadir || return 1
+	fi
+}
+
+LiviaCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+LiviaCoin_stop()
+{
+    LiviaCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${LiviaCoin_config} -datadir=${LiviaCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

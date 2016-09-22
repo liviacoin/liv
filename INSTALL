@@ -1,0 +1,9 @@
+Building LiviaCoin
+
+See doc/readme-qt.rst for instructions on building LiviaCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of LiviaCoin.
+
+See doc/build-*.txt for instructions on building LiviaCoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of LiviaCoin.

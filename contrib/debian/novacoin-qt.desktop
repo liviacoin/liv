@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=LiviaCoin
+Comment=LiviaCoin P2P Cryptocurrency
+Comment[ru]=LiviaCoin, P2P криптовалюта
+Comment[fr]=LiviaCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=LiviaCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/LiviaCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/LiviaCoin80.xpm
+MimeType=x-scheme-handler/LiviaCoin;
+Categories=Office;

@@ -1,0 +1,2 @@
+debian/bin/LiviaCoind usr/bin
+src/LiviaCoind usr/lib/LiviaCoin
